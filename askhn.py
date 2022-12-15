@@ -3,6 +3,7 @@ from urllib.parse import urlparse
 
 import requests
 
+
 SCHEMES = ["https", "http"]
 BASE_URL = "news.ycombinator.com"
 PATH = "/item"
@@ -32,11 +33,11 @@ def fetch_post(url: str) -> str:
     return response.text
 
 
-def scrap_post(url: str):
+def scrap_post(page_source: str):
     pass
 
 
-if __name__ == "__main__":
+def main() -> int:
     parser = argparse.ArgumentParser(prog='Ask:HN post urls')
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('--url', type=str, help='url of post')
@@ -46,5 +47,12 @@ if __name__ == "__main__":
     if not is_ask_hn_url(url=url):
         print(f"{url}: Not a Ask:HN url")
     else:
-        print(f"fetching {url}")
-        page_source = fetch_post(url=url)
+        print(f"fetching {url} ...")
+        page_source = fetch_post(url)
+        print("scraping post ...")
+        scrap_post(page_source)
+    return 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
