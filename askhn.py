@@ -2,6 +2,7 @@ import argparse
 from urllib.parse import urlparse
 
 import requests
+from bs4 import BeautifulSoup, element
 
 
 SCHEMES = ["https", "http"]
@@ -33,8 +34,19 @@ def fetch_post(url: str) -> str:
     return response.text
 
 
+def comment_tags(page_source: str) -> element.ResultSet:
+    soup = BeautifulSoup(page_source, 'html.parser')
+    return soup.find_all(name='span', attrs={"class": "commtext c00"})
+
+
+def href_tags(tag: element.Tag) -> element.ResultSet:
+    return tag.find_all("a", href=True)
+
+
 def scrap_post(page_source: str):
-    pass
+    for tag in comment_tags(page_source):
+        for url_tag in href_tags(tag):
+            print(url_tag.text)
 
 
 def main() -> int:
