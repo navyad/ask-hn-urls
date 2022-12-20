@@ -1,4 +1,4 @@
-### ask-hn-urls
+## ask-hn-urls
 Find URLs posted as a part of comments over on [Ask HN](https://news.ycombinator.com/ask) section.
 
 ### Idea
@@ -9,7 +9,7 @@ Posts like where people do post urls links as part of comments, like
 ### Setup
 * Install 3.11 or newer.
 * Install pipenv
-* Run ```pipenv install``` and ```pip shell```
+* Run ```pipenv install``` and ```pipenv shell```
 
 ### Usage
 ```
