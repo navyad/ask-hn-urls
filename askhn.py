@@ -3,6 +3,8 @@ from urllib.parse import urlparse
 
 import requests
 from bs4 import BeautifulSoup, element
+from rich.console import Console
+from rich.table import Table
 
 
 SCHEMES = ["https", "http"]
@@ -36,17 +38,28 @@ def fetch_post(url: str) -> str:
 
 def comment_tags(page_source: str) -> element.ResultSet:
     soup = BeautifulSoup(page_source, 'html.parser')
-    return soup.find_all(name='span', attrs={"class": "commtext c00"})
+    title = soup.title.text
+    comments = soup.find_all(name='span', attrs={"class": "commtext c00"})
+    return title, comments
 
 
 def href_tags(tag: element.Tag) -> element.ResultSet:
     return tag.find_all("a", href=True)
 
 
-def scrap_post(page_source: str):
-    for tag in comment_tags(page_source):
-        for url_tag in href_tags(tag):
-            print(url_tag.text)
+def scrap_post(page_source: str) -> set['str']:
+    title, comments = comment_tags(page_source)
+    return title, (
+        url_tag.text for tag in comments for url_tag in href_tags(tag))
+
+
+def display(title: str, urls: set) -> None:
+    table = Table()
+    table.add_column(title, style="blue")
+    for url in urls:
+        table.add_row(url)
+    console = Console()
+    console.print(table)
 
 
 def main() -> int:
@@ -59,10 +72,8 @@ def main() -> int:
     if not is_ask_hn_url(url=url):
         print(f"{url}: Not a Ask:HN url")
     else:
-        print(f"fetching {url} ...")
         page_source = fetch_post(url)
-        print("scraping post ...")
-        scrap_post(page_source)
+        display(*scrap_post(page_source))
     return 1
 
 
