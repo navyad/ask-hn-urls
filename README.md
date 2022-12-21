@@ -7,7 +7,7 @@ Posts like where people do post urls links as part of comments, like
 , gathering all urls for posts like this would be useful.
 
 ### Setup
-* Install 3.11 or newer.
+* Install Python 3.11 or newer.
 * Install pipenv
 * Run ```pipenv install``` and ```pipenv shell```
 
