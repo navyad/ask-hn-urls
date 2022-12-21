@@ -5,6 +5,7 @@ import requests
 from bs4 import BeautifulSoup, element
 from rich.console import Console
 from rich.table import Table
+from rich import box
 
 
 SCHEMES = ["https", "http"]
@@ -38,9 +39,8 @@ def fetch_post(url: str) -> str:
 
 def comment_tags(page_source: str) -> element.ResultSet:
     soup = BeautifulSoup(page_source, 'html.parser')
-    title = soup.title.text
     comments = soup.find_all(name='span', attrs={"class": "commtext c00"})
-    return title, comments
+    return soup.title.text, comments
 
 
 def href_tags(tag: element.Tag) -> element.ResultSet:
@@ -50,11 +50,11 @@ def href_tags(tag: element.Tag) -> element.ResultSet:
 def scrap_post(page_source: str) -> set['str']:
     title, comments = comment_tags(page_source)
     return title, (
-        url_tag.text for tag in comments for url_tag in href_tags(tag))
+        url_tag.attrs['href'] for tag in comments for url_tag in href_tags(tag))
 
 
 def display(title: str, urls: set) -> None:
-    table = Table()
+    table = Table(box=box.ROUNDED)
     table.add_column(title, style="blue")
     for url in urls:
         table.add_row(url)
