@@ -53,11 +53,11 @@ def scrap_post(page_source: str) -> set['str']:
         url_tag.attrs['href'] for tag in comments for url_tag in href_tags(tag))
 
 
-def display(title: str, urls: set) -> None:
+def display(title_color: str, title: str, box_items: set) -> None:
     table = Table(box=box.ROUNDED)
-    table.add_column(title, style="blue")
-    for url in urls:
-        table.add_row(url)
+    table.add_column(title, style=title_color)
+    for item in box_items:
+        table.add_row(item)
     console = Console()
     console.print(table)
 
@@ -70,10 +70,11 @@ def main() -> int:
     url = args.url
 
     if not is_ask_hn_url(url=url):
-        print(f"{url}: Not a Ask:HN url")
+        display(title_color="red", title="ERROR", box_items=[f"Not a Ask HN url: {url}"])
     else:
         page_source = fetch_post(url)
-        display(*scrap_post(page_source))
+        title, comments = scrap_post(page_source)
+        display(title_color="blue", title=title, box_items=comments)
     return 1
 
 
