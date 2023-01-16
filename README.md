@@ -12,6 +12,5 @@ Posts like where people do post urls links as part of comments, like
 * Run ```pipenv install``` and ```pipenv shell```
 
 ### Usage
-```
-python askhn.py --url https://news.ycombinator.com/item\?id\=1475575
-```
+<img width="1109" alt="Screenshot 2023-01-16 at 12 09 37 PM" src="https://user-images.githubusercontent.com/1172317/212614132-2225da7b-d4c0-4215-af2d-fa54e8c7147e.png">
+
