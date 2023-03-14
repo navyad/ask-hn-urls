@@ -7,8 +7,9 @@ Posts like where people do post urls links as part of comments, like
 , gathering all urls for posts like this would be useful.
 
 ### Setup
-* Install Python 3.11 or newer.
-* Install pipenv
+* Install python 3.11 or newer. Also install ```pipenv```
+* clone the repo ```git clone https://github.com/navyad/ask-hn-urls.git```
+* cd ```ask-hn-urls```
 * Run ```pipenv install``` and ```pipenv shell```
 
 ### Usage
