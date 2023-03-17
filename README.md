@@ -13,4 +13,13 @@ Posts like where people do post urls links as part of comments, like
 * Run ```pipenv install``` and ```pipenv shell```
 
 ### Usage
+```python3 askhn --help
+usage: Ask:HN post urls [-h] --url URL
+
+options:
+  -h, --help  show this help message and exit
+  --url URL   url of post
+```
+
+### Example
 <img width="958" alt="Screenshot 2023-03-14 at 4 00 30 PM" src="https://user-images.githubusercontent.com/1172317/224977009-4e045557-a701-446c-a9eb-2c1731c76753.png">

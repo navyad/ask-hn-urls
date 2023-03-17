@@ -63,7 +63,7 @@ def display(title_color: str, title: str, box_items: set) -> None:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(prog='Ask:HN post urls')
+    parser = argparse.ArgumentParser(prog='python3 askhn')
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('--url', type=str, help='url of post')
     args = parser.parse_args()
@@ -71,10 +71,10 @@ def main() -> int:
 
     if not is_ask_hn_url(url=url):
         display(title_color="red", title="ERROR", box_items=[f"Not a Ask HN url: {url}"])
-    else:
-        page_source = fetch_post(url)
-        title, comments = scrap_post(page_source)
-        display(title_color="blue", title=title, box_items=comments)
+        return 1
+    page_source = fetch_post(url)
+    title, comments = scrap_post(page_source)
+    display(title_color="blue", title=title, box_items=comments)
     return 1
 
 
